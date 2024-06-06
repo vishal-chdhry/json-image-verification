@@ -1,0 +1,27 @@
+- imageReferences: "*"
+  cosign:
+  - key:
+      publicKey: ""
+    keyless:
+      issuer: ""
+      subject: ""
+      root: ""
+    certificate:
+      cert: ""
+      certChain: ""
+    rekor:
+      url: ""
+      pubKey: ""
+    ctlog:
+      pubKey: ""
+    repository: ""
+    signatureAlgorithm: ""
+    ignoreSCT: false
+    ignoreTlog: false
+    tsaCertChain: ""
+    intotoAttestations:
+    - type: "http://cyclonedx.com/sbom"
+  notary:
+  - certs: ""
+    attestations:
+    - type: "cyclonedx/sbom"
