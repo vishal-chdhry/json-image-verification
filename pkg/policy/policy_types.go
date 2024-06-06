@@ -35,7 +35,7 @@ type Cosign struct {
 	IgnoreTlog         bool           `json:"ignoreTlog"`
 	IgnoreSCT          bool           `json:"ignoreSCT"`
 	TSACertChain       string         `json:"tsaCertChain"`
-	InToToAttestations *[]Attestation `json:"intotoAttestations,omitempty"`
+	InToToAttestations []*Attestation `json:"intotoAttestations,omitempty"`
 }
 
 type Key struct {
