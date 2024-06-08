@@ -29,10 +29,17 @@ type ImageVerificationPolicy struct {
 }
 
 type ImageVerificationPolicySpec struct {
-	Match          any                  `json:"match"`
-	ImageExtractor ImageExtractorConfig `json:"imageExtractor"`
-	Rules          VerificationRules    `json:"rules"`
+	Rules []ImageVerificationRule `json:"rules"`
 }
+
+type ImageVerificationRule struct {
+	Name           string                `json:"name"`
+	Match          any                   `json:"match"`
+	ImageExtractor ImageExtractorConfigs `json:"imageExtractors"`
+	Rules          VerificationRules     `json:"verify"`
+}
+
+type ImageExtractorConfigs map[string][]ImageExtractorConfig
 
 type ImageExtractorConfig struct {
 	// Path is the path to the object containing the image field in a custom resource.
