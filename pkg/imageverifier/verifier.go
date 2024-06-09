@@ -11,21 +11,21 @@ import (
 )
 
 type imageVerifier struct {
-	policies       policy.VerificationPolicies
+	rules          policy.VerificationRules
 	cosignVerifier images.ImageVerifier
 	notaryVerifier images.ImageVerifier
 }
 
-func NewVerifier(policies policy.VerificationPolicies) *imageVerifier {
+func NewVerifier(rules policy.VerificationRules) *imageVerifier {
 	return &imageVerifier{
-		policies:       policies,
+		rules:          rules,
 		cosignVerifier: cosign.NewVerifier(),
 		notaryVerifier: notary.NewVerifier(),
 	}
 }
 
 func (i *imageVerifier) Verify(image string) error {
-	for _, policy := range i.policies {
+	for _, policy := range i.rules {
 		if !wildcard.Match(policy.ImageReferences, image) {
 			continue
 		}
@@ -61,7 +61,7 @@ func (i *imageVerifier) cosignVerification(pol *policy.Cosign, image string) err
 		return err
 	}
 
-	_, err = i.cosignVerifier.VerifySignature(context.Background(), *opts)
+	_, err = i.cosignVerifier.VerifySignature(context.TODO(), *opts)
 	if err != nil {
 		return err
 	}
@@ -72,7 +72,7 @@ func (i *imageVerifier) cosignVerification(pol *policy.Cosign, image string) err
 		}
 
 		o := *opts
-		o.PredicateType = att.Type
+		o.Type = att.Type
 		_, err := i.cosignVerifier.FetchAttestations(context.Background(), o)
 		if err != nil {
 			return err
@@ -98,7 +98,7 @@ func (i *imageVerifier) notaryVerification(pol *policy.Notary, image string) err
 		}
 
 		o := *opts
-		o.PredicateType = att.Type
+		o.Type = att.Type
 		_, err := i.notaryVerifier.FetchAttestations(context.Background(), o)
 		if err != nil {
 			return err

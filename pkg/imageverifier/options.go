@@ -49,10 +49,10 @@ func cosignVerificationOpts(c *policy.Cosign, image string) (*images.Options, er
 
 	if c.Rekor != nil {
 		opts.RekorURL = c.Rekor.URL
-		if len(opts.RekorURL) == 0 {
-			opts.RekorURL = "https://rekor.sigstore.dev"
-		}
 		opts.RekorPubKey = c.Rekor.PubKey
+	}
+	if len(opts.RekorURL) == 0 {
+		opts.RekorURL = "https://rekor.sigstore.dev"
 	}
 	if c.CTLog != nil {
 		opts.CTLogsPubKey = c.CTLog.PubKey
