@@ -3,6 +3,7 @@ package policy
 import (
 	"fmt"
 
+	"github.com/kyverno/kyverno-json/pkg/apis/policy/v1alpha1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -34,7 +35,7 @@ type ImageVerificationPolicySpec struct {
 
 type ImageVerificationRule struct {
 	Name           string                `json:"name"`
-	Match          any                   `json:"match"`
+	Match          v1alpha1.Match        `json:"match"`
 	ImageExtractor ImageExtractorConfigs `json:"imageExtractors"`
 	Rules          VerificationRules     `json:"verify"`
 }
