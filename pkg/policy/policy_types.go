@@ -40,7 +40,7 @@ type ImageVerificationRule struct {
 	Rules          VerificationRules     `json:"verify"`
 }
 
-type ImageExtractorConfigs map[string][]ImageExtractorConfig
+type ImageExtractorConfigs []ImageExtractorConfig
 
 type ImageExtractorConfig struct {
 	// Path is the path to the object containing the image field in a custom resource.
