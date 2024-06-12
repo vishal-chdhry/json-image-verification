@@ -1,4 +1,4 @@
-package policy
+package v1alpha1
 
 import (
 	"fmt"
@@ -27,6 +27,15 @@ type ImageVerificationPolicy struct {
 
 	// ImageVerificationPolicy spec.
 	Spec ImageVerificationPolicySpec `json:"spec" yaml:"spec"`
+}
+
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
+// ImageVerificationPolicyList is a list of ValidatingPolicy instances.
+type ImageVerificationPolicyList struct {
+	metav1.TypeMeta `json:",inline" yaml:",inline"`
+	metav1.ListMeta `json:"metadata" yaml:"metadata"`
+	Items           []ImageVerificationPolicy `json:"items" yaml:"items"`
 }
 
 type ImageVerificationPolicySpec struct {
@@ -78,24 +87,37 @@ type VerificationRule struct {
 	ImageReferences string `json:"imageReferences"`
 
 	// Cosign is an array of attributes used to verify cosign signatures
+	// +optional
 	Cosign []*Cosign `json:"cosign,omitempty"`
 
 	// Notary is an array of attributes used to verify notary signatures
+	// +optional
 	Notary []*Notary `json:"notary,omitempty"`
 }
 
 // Cosign is a set of attributes used to verify cosign signatures
 type Cosign struct {
-	Key                *Key           `json:"key,omitempty"`
-	Keyless            *Keyless       `json:"keyless,omitempty"`
-	Certificate        *Certificate   `json:"certificate,omitempty"`
-	Rekor              *Rekor         `json:"rekor,omitempty"`
-	CTLog              *CTLog         `json:"ctlog,omitempty"`
-	SignatureAlgorithm string         `json:"signatureAlgorithm,omitempty"`
-	Repository         string         `json:"repository,omitempty"`
-	IgnoreTlog         bool           `json:"ignoreTlog"`
-	IgnoreSCT          bool           `json:"ignoreSCT"`
-	TSACertChain       string         `json:"tsaCertChain"`
+	// +optional
+	Key *Key `json:"key,omitempty"`
+	// +optional
+	Keyless *Keyless `json:"keyless,omitempty"`
+	// +optional
+	Certificate *Certificate `json:"certificate,omitempty"`
+	// +optional
+	Rekor *Rekor `json:"rekor,omitempty"`
+	// +optional
+	CTLog *CTLog `json:"ctlog,omitempty"`
+	// +optional
+	SignatureAlgorithm string `json:"signatureAlgorithm,omitempty"`
+	// +optional
+	Repository string `json:"repository,omitempty"`
+	// +optional
+	IgnoreTlog bool `json:"ignoreTlog"`
+	// +optional
+	IgnoreSCT bool `json:"ignoreSCT"`
+	// +optional
+	TSACertChain string `json:"tsaCertChain"`
+	// +optional
 	InToToAttestations []*Attestation `json:"intotoAttestations,omitempty"`
 }
 
@@ -110,26 +132,33 @@ type Keyless struct {
 }
 
 type Certificate struct {
-	Cert      string `json:"cert"`
+	// +optional
+	Cert string `json:"cert"`
+	// +optional
 	CertChain string `json:"certChain"`
 }
 
 type Rekor struct {
-	URL    string `json:"url"`
+	// +optional
+	URL string `json:"url"`
+	// +optional
 	PubKey string `json:"pubKey"`
 }
 
 type CTLog struct {
+	// +optional
 	PubKey string `json:"pubKey"`
 }
 
 // Notary is a set of attributes used to verify notary signatures
 type Notary struct {
-	Certs        string         `json:"certs"`
+	Certs string `json:"certs"`
+	// +optional
 	Attestations []*Attestation `json:"attestations"`
 }
 
 type Attestation struct {
+	// +optional
 	Type string `json:"type"`
 }
 

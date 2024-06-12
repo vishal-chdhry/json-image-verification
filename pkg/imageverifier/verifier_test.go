@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/vishal-chdhry/cloud-image-verification/pkg/policy"
+	"github.com/vishal-chdhry/cloud-image-verification/pkg/apis/v1alpha1"
 )
 
 func Test_Verifier(t *testing.T) {
@@ -72,7 +72,7 @@ func Test_Verifier(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			var ivRules policy.VerificationRules
+			var ivRules v1alpha1.VerificationRules
 			if err := json.Unmarshal([]byte(tt.rules), &ivRules); err != nil {
 				t.Fatalf("failed to unmarshal rules: %v", err)
 			}

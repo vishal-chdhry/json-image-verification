@@ -9,7 +9,7 @@
             "-c"
          ],
          "essential": true,
-         "image": "ghcr.io/kyverno/test-verify-image:invalid",
+         "image": "ghcr.io/kyverno/test-verify-image:signed",
          "logConfiguration": { 
             "logDriver": "awslogs",
             "options": { 

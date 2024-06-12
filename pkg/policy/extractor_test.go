@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"testing"
 
+	"github.com/vishal-chdhry/cloud-image-verification/pkg/apis/v1alpha1"
 	"gotest.tools/assert"
 )
 
@@ -56,14 +57,14 @@ func Test_Extractor(t *testing.T) {
 	tests := []struct {
 		name       string
 		resource   string
-		extractors ImageExtractorConfigs
+		extractors v1alpha1.ImageExtractorConfigs
 		images     map[string]string
 		wantErr    bool
 	}{
 		{
 			name:     "valid path",
 			resource: taskDefinition,
-			extractors: []ImageExtractorConfig{
+			extractors: []v1alpha1.ImageExtractorConfig{
 				{
 					Name: "test",
 					Path: "/containerDefinitions/*/image/",
@@ -76,7 +77,7 @@ func Test_Extractor(t *testing.T) {
 		{
 			name:     "path not found",
 			resource: taskDefinition,
-			extractors: []ImageExtractorConfig{
+			extractors: []v1alpha1.ImageExtractorConfig{
 				{
 					Name: "test",
 					Path: "/containerDefinitions/*/invalid/",
@@ -87,7 +88,7 @@ func Test_Extractor(t *testing.T) {
 		{
 			name:     "invalid path",
 			resource: taskDefinition,
-			extractors: []ImageExtractorConfig{
+			extractors: []v1alpha1.ImageExtractorConfig{
 				{
 					Name: "test",
 					Path: "/containerDefinitions/0/image/",

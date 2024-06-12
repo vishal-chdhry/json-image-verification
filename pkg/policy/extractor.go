@@ -9,6 +9,7 @@ import (
 	"github.com/kyverno/kyverno/pkg/engine/jmespath"
 	"github.com/kyverno/kyverno/pkg/logging"
 	imageutils "github.com/kyverno/kyverno/pkg/utils/image"
+	"github.com/vishal-chdhry/cloud-image-verification/pkg/apis/v1alpha1"
 )
 
 type imageExtractor struct {
@@ -106,7 +107,7 @@ func extract(
 	return extract(output[currentPath], append(path, currentPath), keyPath, valuePath, fields[1:], jmesPath, imageInfos, cfg)
 }
 
-func lookupImageExtractors(configs ImageExtractorConfigs) []imageExtractor {
+func lookupImageExtractors(configs v1alpha1.ImageExtractorConfigs) []imageExtractor {
 	extractors := []imageExtractor{}
 	for _, c := range configs {
 		fields := func(input []string) []string {
@@ -139,7 +140,7 @@ func lookupImageExtractors(configs ImageExtractorConfigs) []imageExtractor {
 	return extractors
 }
 
-func GetImages(resource interface{}, configs ImageExtractorConfigs) (map[string]string, error) {
+func GetImages(resource interface{}, configs v1alpha1.ImageExtractorConfigs) (map[string]string, error) {
 	cfg := config.NewDefaultConfiguration(false)
 	extractors := lookupImageExtractors(configs)
 	info := map[string]string{}

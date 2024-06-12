@@ -5,14 +5,15 @@ import (
 	"encoding/json"
 	"fmt"
 
+	"github.com/vishal-chdhry/cloud-image-verification/pkg/apis/v1alpha1"
 	"github.com/vishal-chdhry/cloud-image-verification/pkg/policy"
 )
 
 type engine struct {
-	policies []*policy.ImageVerificationPolicy
+	policies []*v1alpha1.ImageVerificationPolicy
 }
 
-func NewEngine(policies []*policy.ImageVerificationPolicy) *engine {
+func NewEngine(policies []*v1alpha1.ImageVerificationPolicy) *engine {
 	return &engine{
 		policies: policies,
 	}

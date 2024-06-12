@@ -3,10 +3,10 @@ package imageverifier
 import (
 	"github.com/kyverno/kyverno/pkg/images"
 	"github.com/kyverno/kyverno/pkg/registryclient"
-	"github.com/vishal-chdhry/cloud-image-verification/pkg/policy"
+	"github.com/vishal-chdhry/cloud-image-verification/pkg/apis/v1alpha1"
 )
 
-func notaryVerificationOpts(n *policy.Notary, image string) (*images.Options, error) {
+func notaryVerificationOpts(n *v1alpha1.Notary, image string) (*images.Options, error) {
 	var err error
 	opts := &images.Options{
 		Cert:     n.Certs,
@@ -25,7 +25,7 @@ func notaryVerificationOpts(n *policy.Notary, image string) (*images.Options, er
 	return opts, nil
 }
 
-func cosignVerificationOpts(c *policy.Cosign, image string) (*images.Options, error) {
+func cosignVerificationOpts(c *v1alpha1.Cosign, image string) (*images.Options, error) {
 	var err error
 	opts := &images.Options{
 		ImageRef: image,

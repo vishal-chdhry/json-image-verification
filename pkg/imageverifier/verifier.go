@@ -2,21 +2,22 @@ package imageverifier
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/kyverno/kyverno/ext/wildcard"
 	"github.com/kyverno/kyverno/pkg/cosign"
 	"github.com/kyverno/kyverno/pkg/images"
 	"github.com/kyverno/kyverno/pkg/notary"
-	"github.com/vishal-chdhry/cloud-image-verification/pkg/policy"
+	"github.com/vishal-chdhry/cloud-image-verification/pkg/apis/v1alpha1"
 )
 
 type imageVerifier struct {
-	rules          policy.VerificationRules
+	rules          v1alpha1.VerificationRules
 	cosignVerifier images.ImageVerifier
 	notaryVerifier images.ImageVerifier
 }
 
-func NewVerifier(rules policy.VerificationRules) *imageVerifier {
+func NewVerifier(rules v1alpha1.VerificationRules) *imageVerifier {
 	return &imageVerifier{
 		rules:          rules,
 		cosignVerifier: cosign.NewVerifier(),
@@ -27,6 +28,7 @@ func NewVerifier(rules policy.VerificationRules) *imageVerifier {
 func (i *imageVerifier) Verify(image string) error {
 	for _, policy := range i.rules {
 		if !wildcard.Match(policy.ImageReferences, image) {
+			fmt.Printf("skipping image: %s\n", image)
 			continue
 		}
 
@@ -55,7 +57,7 @@ func (i *imageVerifier) Verify(image string) error {
 	return nil
 }
 
-func (i *imageVerifier) cosignVerification(pol *policy.Cosign, image string) error {
+func (i *imageVerifier) cosignVerification(pol *v1alpha1.Cosign, image string) error {
 	opts, err := cosignVerificationOpts(pol, image)
 	if err != nil {
 		return err
@@ -81,7 +83,7 @@ func (i *imageVerifier) cosignVerification(pol *policy.Cosign, image string) err
 	return nil
 }
 
-func (i *imageVerifier) notaryVerification(pol *policy.Notary, image string) error {
+func (i *imageVerifier) notaryVerification(pol *v1alpha1.Notary, image string) error {
 	opts, err := notaryVerificationOpts(pol, image)
 	if err != nil {
 		return err
