@@ -140,8 +140,6 @@ spec:
                                   properties:
                                     publicKey:
                                       type: string
-                                  required:
-                                  - publicKey
                                   type: object
                                 keyless:
                                   properties:
@@ -151,10 +149,6 @@ spec:
                                       type: string
                                     subject:
                                       type: string
-                                  required:
-                                  - issuer
-                                  - root
-                                  - subject
                                   type: object
                                 rekor:
                                   properties:

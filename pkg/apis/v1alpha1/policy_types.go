@@ -122,13 +122,17 @@ type Cosign struct {
 }
 
 type Key struct {
+	// +optional
 	PublicKey string `json:"publicKey"`
 }
 
 type Keyless struct {
-	Issuer  string `json:"issuer"`
+	// +optional
+	Issuer string `json:"issuer"`
+	// +optional
 	Subject string `json:"subject"`
-	Root    string `json:"root"`
+	// +optional
+	Root string `json:"root"`
 }
 
 type Certificate struct {
