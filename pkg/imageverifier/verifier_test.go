@@ -78,7 +78,7 @@ func Test_Verifier(t *testing.T) {
 			}
 
 			verifier := NewVerifier(ivRules)
-			if err := verifier.Verify(tt.image); (err != nil) != tt.wantErr {
+			if err := verifier.Verify(tt.image); (len(err) != 0) != tt.wantErr {
 				t.Errorf("test failed, wantErr: %v, got error: %v", tt.wantErr, err)
 			}
 		})
