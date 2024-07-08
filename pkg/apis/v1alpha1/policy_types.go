@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/kyverno/kyverno-json/pkg/apis/policy/v1alpha1"
+	kyvernov1 "github.com/kyverno/kyverno/api/kyverno/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -164,6 +165,10 @@ type Notary struct {
 type Attestation struct {
 	// +optional
 	Type string `json:"type"`
+	// Conditions are used to verify attributes within a Predicate. If no Conditions are specified
+	// the attestation check is satisfied as long there are predicates that match the predicate type.
+	// +optional
+	Conditions []kyvernov1.AnyAllConditions `json:"conditions,omitempty" yaml:"conditions,omitempty"`
 }
 
 func (v *VerificationRule) Validate() error {

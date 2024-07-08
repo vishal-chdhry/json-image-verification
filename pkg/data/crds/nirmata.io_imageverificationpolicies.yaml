@@ -132,6 +132,118 @@ spec:
                                 intotoAttestations:
                                   items:
                                     properties:
+                                      conditions:
+                                        description: |-
+                                          Conditions are used to verify attributes within a Predicate. If no Conditions are specified
+                                          the attestation check is satisfied as long there are predicates that match the predicate type.
+                                        items:
+                                          description: |-
+                                            AnyAllConditions consists of conditions wrapped denoting a logical criteria to be fulfilled.
+                                            AnyConditions get fulfilled when at least one of its sub-conditions passes.
+                                            AllConditions get fulfilled only when all of its sub-conditions pass.
+                                          properties:
+                                            all:
+                                              description: |-
+                                                AllConditions enable variable-based conditional rule execution. This is useful for
+                                                finer control of when an rule is applied. A condition can reference object data
+                                                using JMESPath notation.
+                                                Here, all of the conditions need to pass
+                                              items:
+                                                description: Condition defines variable-based
+                                                  conditional criteria for rule execution.
+                                                properties:
+                                                  key:
+                                                    description: Key is the context
+                                                      entry (using JMESPath) for conditional
+                                                      rule evaluation.
+                                                    x-kubernetes-preserve-unknown-fields: true
+                                                  message:
+                                                    description: Message is an optional
+                                                      display message
+                                                    type: string
+                                                  operator:
+                                                    description: |-
+                                                      Operator is the conditional operation to perform. Valid operators are:
+                                                      Equals, NotEquals, In, AnyIn, AllIn, NotIn, AnyNotIn, AllNotIn, GreaterThanOrEquals,
+                                                      GreaterThan, LessThanOrEquals, LessThan, DurationGreaterThanOrEquals, DurationGreaterThan,
+                                                      DurationLessThanOrEquals, DurationLessThan
+                                                    enum:
+                                                    - Equals
+                                                    - NotEquals
+                                                    - In
+                                                    - AnyIn
+                                                    - AllIn
+                                                    - NotIn
+                                                    - AnyNotIn
+                                                    - AllNotIn
+                                                    - GreaterThanOrEquals
+                                                    - GreaterThan
+                                                    - LessThanOrEquals
+                                                    - LessThan
+                                                    - DurationGreaterThanOrEquals
+                                                    - DurationGreaterThan
+                                                    - DurationLessThanOrEquals
+                                                    - DurationLessThan
+                                                    type: string
+                                                  value:
+                                                    description: |-
+                                                      Value is the conditional value, or set of values. The values can be fixed set
+                                                      or can be variables declared using JMESPath.
+                                                    x-kubernetes-preserve-unknown-fields: true
+                                                type: object
+                                              type: array
+                                            any:
+                                              description: |-
+                                                AnyConditions enable variable-based conditional rule execution. This is useful for
+                                                finer control of when an rule is applied. A condition can reference object data
+                                                using JMESPath notation.
+                                                Here, at least one of the conditions need to pass
+                                              items:
+                                                description: Condition defines variable-based
+                                                  conditional criteria for rule execution.
+                                                properties:
+                                                  key:
+                                                    description: Key is the context
+                                                      entry (using JMESPath) for conditional
+                                                      rule evaluation.
+                                                    x-kubernetes-preserve-unknown-fields: true
+                                                  message:
+                                                    description: Message is an optional
+                                                      display message
+                                                    type: string
+                                                  operator:
+                                                    description: |-
+                                                      Operator is the conditional operation to perform. Valid operators are:
+                                                      Equals, NotEquals, In, AnyIn, AllIn, NotIn, AnyNotIn, AllNotIn, GreaterThanOrEquals,
+                                                      GreaterThan, LessThanOrEquals, LessThan, DurationGreaterThanOrEquals, DurationGreaterThan,
+                                                      DurationLessThanOrEquals, DurationLessThan
+                                                    enum:
+                                                    - Equals
+                                                    - NotEquals
+                                                    - In
+                                                    - AnyIn
+                                                    - AllIn
+                                                    - NotIn
+                                                    - AnyNotIn
+                                                    - AllNotIn
+                                                    - GreaterThanOrEquals
+                                                    - GreaterThan
+                                                    - LessThanOrEquals
+                                                    - LessThan
+                                                    - DurationGreaterThanOrEquals
+                                                    - DurationGreaterThan
+                                                    - DurationLessThanOrEquals
+                                                    - DurationLessThan
+                                                    type: string
+                                                  value:
+                                                    description: |-
+                                                      Value is the conditional value, or set of values. The values can be fixed set
+                                                      or can be variables declared using JMESPath.
+                                                    x-kubernetes-preserve-unknown-fields: true
+                                                type: object
+                                              type: array
+                                          type: object
+                                        type: array
                                       type:
                                         type: string
                                     type: object
@@ -181,6 +293,118 @@ spec:
                                 attestations:
                                   items:
                                     properties:
+                                      conditions:
+                                        description: |-
+                                          Conditions are used to verify attributes within a Predicate. If no Conditions are specified
+                                          the attestation check is satisfied as long there are predicates that match the predicate type.
+                                        items:
+                                          description: |-
+                                            AnyAllConditions consists of conditions wrapped denoting a logical criteria to be fulfilled.
+                                            AnyConditions get fulfilled when at least one of its sub-conditions passes.
+                                            AllConditions get fulfilled only when all of its sub-conditions pass.
+                                          properties:
+                                            all:
+                                              description: |-
+                                                AllConditions enable variable-based conditional rule execution. This is useful for
+                                                finer control of when an rule is applied. A condition can reference object data
+                                                using JMESPath notation.
+                                                Here, all of the conditions need to pass
+                                              items:
+                                                description: Condition defines variable-based
+                                                  conditional criteria for rule execution.
+                                                properties:
+                                                  key:
+                                                    description: Key is the context
+                                                      entry (using JMESPath) for conditional
+                                                      rule evaluation.
+                                                    x-kubernetes-preserve-unknown-fields: true
+                                                  message:
+                                                    description: Message is an optional
+                                                      display message
+                                                    type: string
+                                                  operator:
+                                                    description: |-
+                                                      Operator is the conditional operation to perform. Valid operators are:
+                                                      Equals, NotEquals, In, AnyIn, AllIn, NotIn, AnyNotIn, AllNotIn, GreaterThanOrEquals,
+                                                      GreaterThan, LessThanOrEquals, LessThan, DurationGreaterThanOrEquals, DurationGreaterThan,
+                                                      DurationLessThanOrEquals, DurationLessThan
+                                                    enum:
+                                                    - Equals
+                                                    - NotEquals
+                                                    - In
+                                                    - AnyIn
+                                                    - AllIn
+                                                    - NotIn
+                                                    - AnyNotIn
+                                                    - AllNotIn
+                                                    - GreaterThanOrEquals
+                                                    - GreaterThan
+                                                    - LessThanOrEquals
+                                                    - LessThan
+                                                    - DurationGreaterThanOrEquals
+                                                    - DurationGreaterThan
+                                                    - DurationLessThanOrEquals
+                                                    - DurationLessThan
+                                                    type: string
+                                                  value:
+                                                    description: |-
+                                                      Value is the conditional value, or set of values. The values can be fixed set
+                                                      or can be variables declared using JMESPath.
+                                                    x-kubernetes-preserve-unknown-fields: true
+                                                type: object
+                                              type: array
+                                            any:
+                                              description: |-
+                                                AnyConditions enable variable-based conditional rule execution. This is useful for
+                                                finer control of when an rule is applied. A condition can reference object data
+                                                using JMESPath notation.
+                                                Here, at least one of the conditions need to pass
+                                              items:
+                                                description: Condition defines variable-based
+                                                  conditional criteria for rule execution.
+                                                properties:
+                                                  key:
+                                                    description: Key is the context
+                                                      entry (using JMESPath) for conditional
+                                                      rule evaluation.
+                                                    x-kubernetes-preserve-unknown-fields: true
+                                                  message:
+                                                    description: Message is an optional
+                                                      display message
+                                                    type: string
+                                                  operator:
+                                                    description: |-
+                                                      Operator is the conditional operation to perform. Valid operators are:
+                                                      Equals, NotEquals, In, AnyIn, AllIn, NotIn, AnyNotIn, AllNotIn, GreaterThanOrEquals,
+                                                      GreaterThan, LessThanOrEquals, LessThan, DurationGreaterThanOrEquals, DurationGreaterThan,
+                                                      DurationLessThanOrEquals, DurationLessThan
+                                                    enum:
+                                                    - Equals
+                                                    - NotEquals
+                                                    - In
+                                                    - AnyIn
+                                                    - AllIn
+                                                    - NotIn
+                                                    - AnyNotIn
+                                                    - AllNotIn
+                                                    - GreaterThanOrEquals
+                                                    - GreaterThan
+                                                    - LessThanOrEquals
+                                                    - LessThan
+                                                    - DurationGreaterThanOrEquals
+                                                    - DurationGreaterThan
+                                                    - DurationLessThanOrEquals
+                                                    - DurationLessThan
+                                                    type: string
+                                                  value:
+                                                    description: |-
+                                                      Value is the conditional value, or set of values. The values can be fixed set
+                                                      or can be variables declared using JMESPath.
+                                                    x-kubernetes-preserve-unknown-fields: true
+                                                type: object
+                                              type: array
+                                          type: object
+                                        type: array
                                       type:
                                         type: string
                                     type: object

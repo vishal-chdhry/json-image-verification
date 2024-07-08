@@ -36,4 +36,10 @@ spec:
               uOKpF5rWAruB5PCIrquamOejpXV9aQA/K2JQDuc0mcKz
               -----END CERTIFICATE-----
             attestations:
-              - type: sbom/cyclone-dx
+            - type: sbom/cyclone-dx
+              conditions:
+              - all:
+                - key: "{{ metadata.tools[?vendor=='anchore' && name == 'syft'].version }}"
+                  operator: AllIn
+                  value: ["0.82.0"]
+                  message: Syft version 0.82.0 must be used
