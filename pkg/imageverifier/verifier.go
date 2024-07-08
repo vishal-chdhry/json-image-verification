@@ -2,7 +2,6 @@ package imageverifier
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/kyverno/kyverno/ext/wildcard"
 	"github.com/kyverno/kyverno/pkg/cosign"
@@ -25,10 +24,10 @@ func NewVerifier(rules v1alpha1.VerificationRules) *imageVerifier {
 	}
 }
 
-func (i *imageVerifier) Verify(image string) error {
+func (i *imageVerifier) Verify(image string) []error {
+	errs := make([]error, 0)
 	for _, policy := range i.rules {
 		if !wildcard.Match(policy.ImageReferences, image) {
-			fmt.Printf("skipping image: %s\n", image)
 			continue
 		}
 
@@ -39,7 +38,8 @@ func (i *imageVerifier) Verify(image string) error {
 
 			err := i.cosignVerification(cosignPolicy, image)
 			if err != nil {
-				return err
+				errs = append(errs, err)
+				continue
 			}
 		}
 
@@ -50,11 +50,12 @@ func (i *imageVerifier) Verify(image string) error {
 
 			err := i.notaryVerification(notaryPolicy, image)
 			if err != nil {
-				return err
+				errs = append(errs, err)
+				continue
 			}
 		}
 	}
-	return nil
+	return errs
 }
 
 func (i *imageVerifier) cosignVerification(pol *v1alpha1.Cosign, image string) error {

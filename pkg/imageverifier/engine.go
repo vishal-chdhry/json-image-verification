@@ -2,7 +2,6 @@ package imageverifier
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 
 	"github.com/vishal-chdhry/cloud-image-verification/pkg/apis/v1alpha1"
@@ -30,8 +29,6 @@ func (e *engine) Apply(request Request) []error {
 				return errors
 			}
 			if len(errs) > 0 {
-				b, _ := json.Marshal(r.Match)
-				fmt.Println("skipping", errs, string(b))
 				continue
 			}
 
@@ -42,10 +39,9 @@ func (e *engine) Apply(request Request) []error {
 				return errors
 			}
 			for _, v := range images {
-				fmt.Println("found image:", v)
-				err := verifier.Verify(v)
-				if err != nil {
-					errors = append(errors, fmt.Errorf("Policy: %s, rule: %s, image: %s, error: %w", pol.Name, r.Name, v, err))
+				errs := verifier.Verify(v)
+				for _, err := range errs {
+					errors = append(errors, fmt.Errorf("policy: %s, rule: %s, image: %s, error: %w", pol.Name, r.Name, v, err))
 				}
 			}
 		}
