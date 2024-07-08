@@ -32,8 +32,12 @@ func main() {
 		panic(err)
 	}
 
-	verifier := imageverifier.NewEngine(pol)
-	errors := verifier.Apply(resource)
+	verifier := imageverifier.NewEngine()
+	request := imageverifier.Request{
+		Policies: pol,
+		Resource: resource,
+	}
+	errors := verifier.Apply(request)
 
 	if len(errors) > 0 {
 		fmt.Println("Verification failed...")

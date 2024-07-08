@@ -9,21 +9,22 @@ import (
 	"github.com/vishal-chdhry/cloud-image-verification/pkg/policy"
 )
 
-type engine struct {
-	policies []*v1alpha1.ImageVerificationPolicy
+type engine struct{}
+
+type Request struct {
+	Policies []*v1alpha1.ImageVerificationPolicy
+	Resource interface{}
 }
 
-func NewEngine(policies []*v1alpha1.ImageVerificationPolicy) *engine {
-	return &engine{
-		policies: policies,
-	}
+func NewEngine() *engine {
+	return &engine{}
 }
 
-func (e *engine) Apply(resource interface{}) []error {
+func (e *engine) Apply(request Request) []error {
 	var errors []error
-	for _, pol := range e.policies {
+	for _, pol := range request.Policies {
 		for _, r := range pol.Spec.Rules {
-			errs, err := policy.Match(context.Background(), r.Match, resource)
+			errs, err := policy.Match(context.Background(), r.Match, request.Resource)
 			if err != nil {
 				errors = append(errors, err)
 				return errors
@@ -35,7 +36,7 @@ func (e *engine) Apply(resource interface{}) []error {
 			}
 
 			verifier := NewVerifier(r.Rules)
-			images, err := policy.GetImages(resource, r.ImageExtractor)
+			images, err := policy.GetImages(request.Resource, r.ImageExtractor)
 			if err != nil {
 				errors = append(errors, err)
 				return errors
