@@ -19,8 +19,8 @@ limitations under the License.
 package apis
 
 import (
-	v1alpha1 "github.com/vishal-chdhry/cloud-image-verification/pkg/client/informers/externalversions/apis/v1alpha1"
-	internalinterfaces "github.com/vishal-chdhry/cloud-image-verification/pkg/client/informers/externalversions/internalinterfaces"
+	v1alpha1 "github.com/nirmata/json-image-verification/pkg/client/informers/externalversions/apis/v1alpha1"
+	internalinterfaces "github.com/nirmata/json-image-verification/pkg/client/informers/externalversions/internalinterfaces"
 )
 
 // Interface provides access to each of this group's versions.

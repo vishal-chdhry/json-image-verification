@@ -19,9 +19,9 @@ limitations under the License.
 package fake
 
 import (
-	clientset "github.com/vishal-chdhry/cloud-image-verification/pkg/client/clientset/versioned"
-	nirmatav1alpha1 "github.com/vishal-chdhry/cloud-image-verification/pkg/client/clientset/versioned/typed/apis/v1alpha1"
-	fakenirmatav1alpha1 "github.com/vishal-chdhry/cloud-image-verification/pkg/client/clientset/versioned/typed/apis/v1alpha1/fake"
+	clientset "github.com/nirmata/json-image-verification/pkg/client/clientset/versioned"
+	nirmatav1alpha1 "github.com/nirmata/json-image-verification/pkg/client/clientset/versioned/typed/apis/v1alpha1"
+	fakenirmatav1alpha1 "github.com/nirmata/json-image-verification/pkg/client/clientset/versioned/typed/apis/v1alpha1/fake"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/client-go/discovery"

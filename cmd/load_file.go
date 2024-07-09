@@ -10,8 +10,8 @@ import (
 	"github.com/kyverno/pkg/ext/resource/convert"
 	"github.com/kyverno/pkg/ext/resource/loader"
 	yamlutils "github.com/kyverno/pkg/ext/yaml"
-	"github.com/vishal-chdhry/cloud-image-verification/pkg/apis/v1alpha1"
-	"github.com/vishal-chdhry/cloud-image-verification/pkg/data"
+	"github.com/nirmata/json-image-verification/pkg/apis/v1alpha1"
+	"github.com/nirmata/json-image-verification/pkg/data"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"sigs.k8s.io/kubectl-validate/pkg/openapiclient"
 )

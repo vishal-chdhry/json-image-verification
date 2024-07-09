@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/vishal-chdhry/cloud-image-verification/pkg/apis/v1alpha1"
+	"github.com/nirmata/json-image-verification/pkg/apis/v1alpha1"
 )
 
 func Test_Verifier(t *testing.T) {

@@ -21,8 +21,8 @@ package v1alpha1
 import (
 	"net/http"
 
-	v1alpha1 "github.com/vishal-chdhry/cloud-image-verification/pkg/apis/v1alpha1"
-	"github.com/vishal-chdhry/cloud-image-verification/pkg/client/clientset/versioned/scheme"
+	v1alpha1 "github.com/nirmata/json-image-verification/pkg/apis/v1alpha1"
+	"github.com/nirmata/json-image-verification/pkg/client/clientset/versioned/scheme"
 	rest "k8s.io/client-go/rest"
 )
 

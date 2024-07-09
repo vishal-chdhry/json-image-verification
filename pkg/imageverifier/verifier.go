@@ -13,7 +13,7 @@ import (
 	"github.com/kyverno/kyverno/pkg/engine/variables"
 	"github.com/kyverno/kyverno/pkg/images"
 	"github.com/kyverno/kyverno/pkg/notary"
-	"github.com/vishal-chdhry/cloud-image-verification/pkg/apis/v1alpha1"
+	"github.com/nirmata/json-image-verification/pkg/apis/v1alpha1"
 	"sigs.k8s.io/controller-runtime/pkg/log"
 )
 

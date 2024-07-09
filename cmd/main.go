@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/vishal-chdhry/cloud-image-verification/pkg/imageverifier"
+	"github.com/nirmata/json-image-verification/pkg/imageverifier"
 )
 
 func main() {

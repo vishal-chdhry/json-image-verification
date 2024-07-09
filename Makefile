@@ -4,8 +4,8 @@
 # CONFIG #
 ##########
 
-ORG                                ?= vishal-chdhry
-PACKAGE                            ?= github.com/$(ORG)/cloud-image-verification
+ORG                                ?= nirmata
+PACKAGE                            ?= github.com/$(ORG)/json-image-verification
 KIND_IMAGE                         ?= kindest/node:v1.28.0
 KIND_NAME                          ?= kind
 GIT_SHA                            := $(shell git rev-parse HEAD)

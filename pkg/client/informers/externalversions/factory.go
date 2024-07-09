@@ -23,9 +23,9 @@ import (
 	sync "sync"
 	time "time"
 
-	versioned "github.com/vishal-chdhry/cloud-image-verification/pkg/client/clientset/versioned"
-	apis "github.com/vishal-chdhry/cloud-image-verification/pkg/client/informers/externalversions/apis"
-	internalinterfaces "github.com/vishal-chdhry/cloud-image-verification/pkg/client/informers/externalversions/internalinterfaces"
+	versioned "github.com/nirmata/json-image-verification/pkg/client/clientset/versioned"
+	apis "github.com/nirmata/json-image-verification/pkg/client/informers/externalversions/apis"
+	internalinterfaces "github.com/nirmata/json-image-verification/pkg/client/informers/externalversions/internalinterfaces"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"

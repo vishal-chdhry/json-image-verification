@@ -3,7 +3,7 @@ package imageverifier
 import (
 	"github.com/kyverno/kyverno/pkg/images"
 	"github.com/kyverno/kyverno/pkg/registryclient"
-	"github.com/vishal-chdhry/cloud-image-verification/pkg/apis/v1alpha1"
+	"github.com/nirmata/json-image-verification/pkg/apis/v1alpha1"
 )
 
 func notaryVerificationOpts(n *v1alpha1.Notary, image string) (*images.Options, error) {

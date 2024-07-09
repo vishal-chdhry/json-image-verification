@@ -1,4 +1,4 @@
-module github.com/vishal-chdhry/cloud-image-verification
+module github.com/nirmata/json-image-verification
 
 go 1.22.2
 

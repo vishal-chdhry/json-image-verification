@@ -9,7 +9,7 @@ import (
 	"github.com/kyverno/kyverno/pkg/engine/jmespath"
 	"github.com/kyverno/kyverno/pkg/logging"
 	imageutils "github.com/kyverno/kyverno/pkg/utils/image"
-	"github.com/vishal-chdhry/cloud-image-verification/pkg/apis/v1alpha1"
+	"github.com/nirmata/json-image-verification/pkg/apis/v1alpha1"
 )
 
 type imageExtractor struct {

@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/vishal-chdhry/cloud-image-verification/pkg/apis/v1alpha1"
-	"github.com/vishal-chdhry/cloud-image-verification/pkg/policy"
+	"github.com/nirmata/json-image-verification/pkg/apis/v1alpha1"
+	"github.com/nirmata/json-image-verification/pkg/policy"
 )
 
 type engine struct{}
