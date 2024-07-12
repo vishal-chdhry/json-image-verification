@@ -126,15 +126,6 @@ $(CLI_BIN): fmt vet codegen-crds codegen-deepcopy codegen-register codegen-clien
 .PHONY: build
 build: 
 
-########
-# TEST #
-########
-
-.PHONY: tests
-tests: build ## Run tests
-	@echo Running tests... >&2
-	@go test ./... -race -coverprofile=coverage.out -covermode=atomic$(CLI_BIN) ## Build
-
 .PHONY: ko-build
 ko-build: $(KO) ## Build image (with ko)
 	@echo Build image with ko... >&2
