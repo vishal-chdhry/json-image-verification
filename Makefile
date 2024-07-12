@@ -124,17 +124,16 @@ $(CLI_BIN): fmt vet codegen-crds codegen-deepcopy codegen-register codegen-clien
 	@CGO_ENABLED=$(CGO_ENABLED) GOOS=$(GOOS) go build -o ./$(CLI_BIN) -ldflags=$(LD_FLAGS) ./cmd/
 
 .PHONY: build
-build: $(CLI_BIN) ## Build
+build: 
 
-# .PHONY: build-wasm
-# build-wasm: fmt vet codegen-crds codegen-deepcopy codegen-register codegen-client ## Build the wasm binary
-# 	@echo Build wasm module... >&2
-# 	@GOOS=js GOARCH=wasm go build -o ./website/playground/assets/main.wasm -ldflags=$(LD_FLAGS) ./wasm/main.go
+########
+# TEST #
+########
 
-.PHONY: serve-playground
-serve-playground: $(CLI_BIN) ## Serve playground
-	@echo Serve playground... >&2
-	@./$(CLI_BIN) playground
+.PHONY: tests
+tests: build ## Run tests
+	@echo Running tests... >&2
+	@go test ./... -race -coverprofile=coverage.out -covermode=atomic$(CLI_BIN) ## Build
 
 .PHONY: ko-build
 ko-build: $(KO) ## Build image (with ko)
@@ -236,12 +235,6 @@ codegen-catalog: ## Generate policy catalog
 .PHONY: codegen-docs
 codegen-docs: # codegen-api-docs codegen-cli-docs codegen-jp-docs codegen-catalog ## Generate docs
 
-# .PHONY: codegen-mkdocs
-# codegen-mkdocs: codegen-docs ## Generate mkdocs website
-# 	@echo Generate mkdocs website... >&2
-# 	@$(PIP) install -r requirements.txt
-# 	@mkdocs build -f ./website/mkdocs.yaml
-
 .PHONY: codegen-schemas-openapi
 codegen-schemas-openapi: CURRENT_CONTEXT = $(shell kubectl config current-context)
 codegen-schemas-openapi: $(KIND) $(HELM) ## Generate openapi schemas (v2 and v3)
@@ -277,26 +270,6 @@ codegen-playground: build-wasm codegen-playground-examples ## Generate playgroun
 	@rm -rf ./pkg/server/ui/dist && mkdir -p ./pkg/server/ui/dist && cp -r ./website/playground/* ./pkg/server/ui/dist
 	@rm -rf ./website/docs/_playground && mkdir -p ./website/docs/_playground && cp -r ./website/playground/* ./website/docs/_playground
 
-# .PHONY: codegen-helm-crds
-# codegen-helm-crds: codegen-crds ## Generate helm CRDs
-# 	@echo Generate helm crds... >&2
-# 	@cat $(CRDS_PATH)/* \
-# 		| $(SED) -e '1i{{- if .Values.crds.install }}' \
-# 		| $(SED) -e '$$a{{- end }}' \
-# 		| $(SED) -e '/^  annotations:/a \ \ \ \ {{- end }}' \
-#  		| $(SED) -e '/^  annotations:/a \ \ \ \ {{- toYaml . | nindent 4 }}' \
-# 		| $(SED) -e '/^  annotations:/a \ \ \ \ {{- with .Values.crds.annotations }}' \
-#  		| $(SED) -e '/^  annotations:/i \ \ labels:' \
-# 		| $(SED) -e '/^  labels:/a \ \ \ \ {{- end }}' \
-#  		| $(SED) -e '/^  labels:/a \ \ \ \ {{- toYaml . | nindent 4 }}' \
-# 		| $(SED) -e '/^  labels:/a \ \ \ \ {{- with .Values.crds.labels }}' \
-# 		| $(SED) -e '/^  labels:/a \ \ \ \ {{- include "kyverno-json.labels" . | nindent 4 }}' \
-#  		> ./charts/kyverno-json/templates/crds.yaml
-
-# .PHONY: codegen-helm-docs
-# codegen-helm-docs: ## Generate helm docs
-# 	@echo Generate helm docs... >&2
-# 	@docker run -v ${PWD}/charts:/work -w /work jnorwood/helm-docs:v1.11.0 -s file
 
 .PHONY: codegen
 codegen: codegen-crds codegen-deepcopy codegen-register codegen-client codegen-docs codegen-schemas # codegen-playground codegen-helm-crds codegen-helm-docs ## Rebuild all generated code and docs
