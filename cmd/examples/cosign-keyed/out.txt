@@ -1,0 +1,4 @@
+Verification Result:
+Results for policy: test
+Results for rule: cosign-keyed
+Verifying image: ghcr.io/kyverno/test-verify-image:signed, result: PASS

@@ -1,0 +1,7 @@
+Verification Result:
+Results for policy: test
+Results for rule: cosign-keyed
+Verifying image: ghcr.io/kyverno/test-verify-image:unsigned, result: FAIL
+Failures:
+no matching signatures: invalid signature when validating ASN.1 encoded signature
+no matching signatures: nil certificate provided

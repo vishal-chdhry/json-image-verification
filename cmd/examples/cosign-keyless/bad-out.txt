@@ -1,0 +1,6 @@
+Verification Result:
+Results for policy: test
+Results for rule: cosign-keyless
+Verifying image: ghcr.io/kyverno/test-verify-image:unsigned, result: FAIL
+Failures:
+no matching signatures: nil certificate provided

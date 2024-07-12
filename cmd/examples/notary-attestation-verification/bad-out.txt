@@ -1,0 +1,6 @@
+Verification Result:
+Results for policy: test
+Results for rule: notary-attestation
+Verifying image: ghcr.io/kyverno/test-verify-image:unsigned, result: FAIL
+Failures:
+failed to verify ghcr.io/kyverno/test-verify-image@sha256:74a98f0e4d750c9052f092a7f7a72de7b20f94f176a490088f7a744c76c53ea5: no signature is associated with "ghcr.io/kyverno/test-verify-image@sha256:74a98f0e4d750c9052f092a7f7a72de7b20f94f176a490088f7a744c76c53ea5", make sure the artifact was signed successfully

@@ -1,0 +1,4 @@
+Verification Result:
+Results for policy: test
+Results for rule: cosign-keyless
+Verifying image: ghcr.io/vishal-chdhry/cosign-test:v1, result: PASS

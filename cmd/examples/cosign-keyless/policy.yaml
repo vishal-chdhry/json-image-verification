@@ -4,7 +4,7 @@ metadata:
   name: test
 spec:
   rules:
-    - name: cosign-keyed
+    - name: cosign-keyless
       match: 
         any:
           - (length(containerDefinitions) > `0`): true
