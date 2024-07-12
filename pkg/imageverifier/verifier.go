@@ -44,6 +44,8 @@ func (i *imageVerifier) Verify(image string) VerificationResult {
 		Image:                 image,
 	}
 	passedCount := 0
+	failedCount := 0
+	skippedCount := 0
 
 	for idx, policy := range i.rules {
 		verificationResp := VerificationResponse{
@@ -51,6 +53,7 @@ func (i *imageVerifier) Verify(image string) VerificationResult {
 			Failures:         make([]error, 0),
 		}
 		if !wildcard.Match(policy.ImageReferences, image) {
+			skippedCount += 1
 			continue
 		}
 
@@ -79,12 +82,16 @@ func (i *imageVerifier) Verify(image string) VerificationResult {
 
 		if len(verificationResp.Failures) == 0 {
 			passedCount += 1
+		} else {
+			failedCount += 1
 		}
 		verificationResult.VerificationResponses[idx] = verificationResp
 	}
 
 	if passedCount >= i.count {
 		verificationResult.VerificationOutcome = PASS
+	} else if passedCount == 0 && failedCount == 0 && skippedCount > 0 { // all skips
+		verificationResult.VerificationOutcome = SKIP
 	} else {
 		verificationResult.VerificationOutcome = FAIL
 	}
