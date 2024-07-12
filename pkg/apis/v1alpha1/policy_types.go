@@ -44,10 +44,13 @@ type ImageVerificationPolicySpec struct {
 }
 
 type ImageVerificationRule struct {
-	Name           string                `json:"name"`
+	Name string `json:"name"`
+	// +optional
 	Match          v1alpha1.Match        `json:"match"`
 	ImageExtractor ImageExtractorConfigs `json:"imageExtractors"`
-	Rules          VerificationRules     `json:"verify"`
+	// +optional
+	RequiredCount int               `json:"count"`
+	Rules         VerificationRules `json:"verify"`
 }
 
 type ImageExtractorConfigs []ImageExtractorConfig

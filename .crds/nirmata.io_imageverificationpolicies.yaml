@@ -43,6 +43,8 @@ spec:
               rules:
                 items:
                   properties:
+                    count:
+                      type: integer
                     imageExtractors:
                       items:
                         properties:
@@ -421,7 +423,6 @@ spec:
                       type: array
                   required:
                   - imageExtractors
-                  - match
                   - name
                   - verify
                   type: object

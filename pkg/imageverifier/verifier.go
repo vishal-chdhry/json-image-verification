@@ -18,24 +18,38 @@ import (
 )
 
 type imageVerifier struct {
+	count          int
 	rules          v1alpha1.VerificationRules
 	cosignVerifier images.ImageVerifier
 	notaryVerifier images.ImageVerifier
 	jsonCtx        enginecontext.Interface
 }
 
-func NewVerifier(rules v1alpha1.VerificationRules) *imageVerifier {
+func NewVerifier(rules v1alpha1.VerificationRules, count int) *imageVerifier {
+	if count <= 0 { // either not defined or illegal value
+		count = len(rules)
+	}
 	return &imageVerifier{
 		jsonCtx:        enginecontext.NewContext(jmespath.New(config.NewDefaultConfiguration(false))),
+		count:          count,
 		rules:          rules,
 		cosignVerifier: cosign.NewVerifier(),
 		notaryVerifier: notary.NewVerifier(),
 	}
 }
 
-func (i *imageVerifier) Verify(image string) []error {
-	errs := make([]error, 0)
-	for _, policy := range i.rules {
+func (i *imageVerifier) Verify(image string) VerificationResult {
+	verificationResult := VerificationResult{
+		VerificationResponses: make([]VerificationResponse, len(i.rules)),
+		Image:                 image,
+	}
+	passedCount := 0
+
+	for idx, policy := range i.rules {
+		verificationResp := VerificationResponse{
+			VerificationRule: policy,
+			Failures:         make([]error, 0),
+		}
 		if !wildcard.Match(policy.ImageReferences, image) {
 			continue
 		}
@@ -44,10 +58,9 @@ func (i *imageVerifier) Verify(image string) []error {
 			if cosignPolicy == nil {
 				continue
 			}
-
 			err := i.cosignVerification(cosignPolicy, image)
 			if err != nil {
-				errs = append(errs, err)
+				verificationResp.Failures = append(verificationResp.Failures, err)
 				continue
 			}
 		}
@@ -59,12 +72,24 @@ func (i *imageVerifier) Verify(image string) []error {
 
 			err := i.notaryVerification(notaryPolicy, image)
 			if err != nil {
-				errs = append(errs, err)
+				verificationResp.Failures = append(verificationResp.Failures, err)
 				continue
 			}
 		}
+
+		if len(verificationResp.Failures) == 0 {
+			passedCount += 1
+		}
+		verificationResult.VerificationResponses[idx] = verificationResp
 	}
-	return errs
+
+	if passedCount >= i.count {
+		verificationResult.VerificationOutcome = PASS
+	} else {
+		verificationResult.VerificationOutcome = FAIL
+	}
+
+	return verificationResult
 }
 
 func (i *imageVerifier) cosignVerification(pol *v1alpha1.Cosign, image string) error {

@@ -11,6 +11,7 @@ spec:
       imageExtractors:
         - name: test
           path: /containerDefinitions/*/image/
+      count: 1
       verify:
       - imageReferences: "ghcr.io/kyverno/test-verify-image*"
         cosign:
@@ -21,3 +22,15 @@ spec:
               5/KAQN0/KjHcorm/J5yctVd7iEcnessRQjU917hmKO6JWVGHpDguIyakZA==
               -----END PUBLIC KEY-----
           ignoreTlog: true
+      - imageReferences: ghcr.io/*
+        cosign:
+          - keyless:
+              issuer: https://accounts.google.com
+              subject: vishal.choudhary@nirmata.com
+            rekor:
+              pubKey: |-
+                -----BEGIN PUBLIC KEY-----
+                MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE2G2Y+2tabdTV5BcGiBIx0a9fAFwr
+                kBbmLSGtks4L3qX6yYY0zufBnhC8Ur/iy55GhWP/9A/bY2LhC30M9+RYtw==
+                -----END PUBLIC KEY-----
+            ignoreSCT: true
