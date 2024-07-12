@@ -288,7 +288,7 @@ mkdocs-serve: ## Generate and serve mkdocs website
 ########
 
 .PHONY: tests
-tests: $(CLI_BIN) ## Run tests
+tests: ## Run tests
 	@echo Running tests... >&2
 	@go test ./... -race -coverprofile=coverage.out -covermode=atomic
 
