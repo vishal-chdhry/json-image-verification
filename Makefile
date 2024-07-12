@@ -296,7 +296,7 @@ test-clean: ## Clean tests cache
 	@go clean -testcache
 
 .PHONY: test-unit
-tests: ## Run tests
+test-unit: ## Run tests
 	@echo Running tests... >&2
 	@go test ./... -race -coverprofile=coverage.out -covermode=atomic
 
