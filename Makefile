@@ -287,7 +287,15 @@ mkdocs-serve: ## Generate and serve mkdocs website
 # TEST #
 ########
 
-.PHONY: tests
+.PHONY: test
+test: test-clean test-unit ## Clean tests cache then run unit tests
+
+.PHONY: test-clean
+test-clean: ## Clean tests cache
+	@echo Clean test cache... >&2
+	@go clean -testcache
+
+.PHONY: test-unit
 tests: ## Run tests
 	@echo Running tests... >&2
 	@go test ./... -race -coverprofile=coverage.out -covermode=atomic
