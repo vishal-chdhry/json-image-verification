@@ -21,7 +21,3 @@ package v1alpha1
 // ImageVerificationPolicyListerExpansion allows custom methods to be added to
 // ImageVerificationPolicyLister.
 type ImageVerificationPolicyListerExpansion interface{}
-
-// ImageVerificationPolicyNamespaceListerExpansion allows custom methods to be added to
-// ImageVerificationPolicyNamespaceLister.
-type ImageVerificationPolicyNamespaceListerExpansion interface{}

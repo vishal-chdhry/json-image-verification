@@ -31,8 +31,9 @@ type ImageVerificationPolicyLister interface {
 	// List lists all ImageVerificationPolicies in the indexer.
 	// Objects returned here must be treated as read-only.
 	List(selector labels.Selector) (ret []*v1alpha1.ImageVerificationPolicy, err error)
-	// ImageVerificationPolicies returns an object that can list and get ImageVerificationPolicies.
-	ImageVerificationPolicies(namespace string) ImageVerificationPolicyNamespaceLister
+	// Get retrieves the ImageVerificationPolicy from the index for a given name.
+	// Objects returned here must be treated as read-only.
+	Get(name string) (*v1alpha1.ImageVerificationPolicy, error)
 	ImageVerificationPolicyListerExpansion
 }
 
@@ -54,41 +55,9 @@ func (s *imageVerificationPolicyLister) List(selector labels.Selector) (ret []*v
 	return ret, err
 }
 
-// ImageVerificationPolicies returns an object that can list and get ImageVerificationPolicies.
-func (s *imageVerificationPolicyLister) ImageVerificationPolicies(namespace string) ImageVerificationPolicyNamespaceLister {
-	return imageVerificationPolicyNamespaceLister{indexer: s.indexer, namespace: namespace}
-}
-
-// ImageVerificationPolicyNamespaceLister helps list and get ImageVerificationPolicies.
-// All objects returned here must be treated as read-only.
-type ImageVerificationPolicyNamespaceLister interface {
-	// List lists all ImageVerificationPolicies in the indexer for a given namespace.
-	// Objects returned here must be treated as read-only.
-	List(selector labels.Selector) (ret []*v1alpha1.ImageVerificationPolicy, err error)
-	// Get retrieves the ImageVerificationPolicy from the indexer for a given namespace and name.
-	// Objects returned here must be treated as read-only.
-	Get(name string) (*v1alpha1.ImageVerificationPolicy, error)
-	ImageVerificationPolicyNamespaceListerExpansion
-}
-
-// imageVerificationPolicyNamespaceLister implements the ImageVerificationPolicyNamespaceLister
-// interface.
-type imageVerificationPolicyNamespaceLister struct {
-	indexer   cache.Indexer
-	namespace string
-}
-
-// List lists all ImageVerificationPolicies in the indexer for a given namespace.
-func (s imageVerificationPolicyNamespaceLister) List(selector labels.Selector) (ret []*v1alpha1.ImageVerificationPolicy, err error) {
-	err = cache.ListAllByNamespace(s.indexer, s.namespace, selector, func(m interface{}) {
-		ret = append(ret, m.(*v1alpha1.ImageVerificationPolicy))
-	})
-	return ret, err
-}
-
-// Get retrieves the ImageVerificationPolicy from the indexer for a given namespace and name.
-func (s imageVerificationPolicyNamespaceLister) Get(name string) (*v1alpha1.ImageVerificationPolicy, error) {
-	obj, exists, err := s.indexer.GetByKey(s.namespace + "/" + name)
+// Get retrieves the ImageVerificationPolicy from the index for a given name.
+func (s *imageVerificationPolicyLister) Get(name string) (*v1alpha1.ImageVerificationPolicy, error) {
+	obj, exists, err := s.indexer.GetByKey(name)
 	if err != nil {
 		return nil, err
 	}

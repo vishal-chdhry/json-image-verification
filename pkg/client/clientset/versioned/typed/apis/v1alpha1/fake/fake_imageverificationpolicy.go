@@ -32,7 +32,6 @@ import (
 // FakeImageVerificationPolicies implements ImageVerificationPolicyInterface
 type FakeImageVerificationPolicies struct {
 	Fake *FakeNirmataV1alpha1
-	ns   string
 }
 
 var imageverificationpoliciesResource = v1alpha1.SchemeGroupVersion.WithResource("imageverificationpolicies")
@@ -42,8 +41,7 @@ var imageverificationpoliciesKind = v1alpha1.SchemeGroupVersion.WithKind("ImageV
 // Get takes name of the imageVerificationPolicy, and returns the corresponding imageVerificationPolicy object, and an error if there is any.
 func (c *FakeImageVerificationPolicies) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.ImageVerificationPolicy, err error) {
 	obj, err := c.Fake.
-		Invokes(testing.NewGetAction(imageverificationpoliciesResource, c.ns, name), &v1alpha1.ImageVerificationPolicy{})
-
+		Invokes(testing.NewRootGetAction(imageverificationpoliciesResource, name), &v1alpha1.ImageVerificationPolicy{})
 	if obj == nil {
 		return nil, err
 	}
@@ -53,8 +51,7 @@ func (c *FakeImageVerificationPolicies) Get(ctx context.Context, name string, op
 // List takes label and field selectors, and returns the list of ImageVerificationPolicies that match those selectors.
 func (c *FakeImageVerificationPolicies) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.ImageVerificationPolicyList, err error) {
 	obj, err := c.Fake.
-		Invokes(testing.NewListAction(imageverificationpoliciesResource, imageverificationpoliciesKind, c.ns, opts), &v1alpha1.ImageVerificationPolicyList{})
-
+		Invokes(testing.NewRootListAction(imageverificationpoliciesResource, imageverificationpoliciesKind, opts), &v1alpha1.ImageVerificationPolicyList{})
 	if obj == nil {
 		return nil, err
 	}
@@ -75,15 +72,13 @@ func (c *FakeImageVerificationPolicies) List(ctx context.Context, opts v1.ListOp
 // Watch returns a watch.Interface that watches the requested imageVerificationPolicies.
 func (c *FakeImageVerificationPolicies) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
 	return c.Fake.
-		InvokesWatch(testing.NewWatchAction(imageverificationpoliciesResource, c.ns, opts))
-
+		InvokesWatch(testing.NewRootWatchAction(imageverificationpoliciesResource, opts))
 }
 
 // Create takes the representation of a imageVerificationPolicy and creates it.  Returns the server's representation of the imageVerificationPolicy, and an error, if there is any.
 func (c *FakeImageVerificationPolicies) Create(ctx context.Context, imageVerificationPolicy *v1alpha1.ImageVerificationPolicy, opts v1.CreateOptions) (result *v1alpha1.ImageVerificationPolicy, err error) {
 	obj, err := c.Fake.
-		Invokes(testing.NewCreateAction(imageverificationpoliciesResource, c.ns, imageVerificationPolicy), &v1alpha1.ImageVerificationPolicy{})
-
+		Invokes(testing.NewRootCreateAction(imageverificationpoliciesResource, imageVerificationPolicy), &v1alpha1.ImageVerificationPolicy{})
 	if obj == nil {
 		return nil, err
 	}
@@ -93,8 +88,7 @@ func (c *FakeImageVerificationPolicies) Create(ctx context.Context, imageVerific
 // Update takes the representation of a imageVerificationPolicy and updates it. Returns the server's representation of the imageVerificationPolicy, and an error, if there is any.
 func (c *FakeImageVerificationPolicies) Update(ctx context.Context, imageVerificationPolicy *v1alpha1.ImageVerificationPolicy, opts v1.UpdateOptions) (result *v1alpha1.ImageVerificationPolicy, err error) {
 	obj, err := c.Fake.
-		Invokes(testing.NewUpdateAction(imageverificationpoliciesResource, c.ns, imageVerificationPolicy), &v1alpha1.ImageVerificationPolicy{})
-
+		Invokes(testing.NewRootUpdateAction(imageverificationpoliciesResource, imageVerificationPolicy), &v1alpha1.ImageVerificationPolicy{})
 	if obj == nil {
 		return nil, err
 	}
@@ -104,14 +98,13 @@ func (c *FakeImageVerificationPolicies) Update(ctx context.Context, imageVerific
 // Delete takes name of the imageVerificationPolicy and deletes it. Returns an error if one occurs.
 func (c *FakeImageVerificationPolicies) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
 	_, err := c.Fake.
-		Invokes(testing.NewDeleteActionWithOptions(imageverificationpoliciesResource, c.ns, name, opts), &v1alpha1.ImageVerificationPolicy{})
-
+		Invokes(testing.NewRootDeleteActionWithOptions(imageverificationpoliciesResource, name, opts), &v1alpha1.ImageVerificationPolicy{})
 	return err
 }
 
 // DeleteCollection deletes a collection of objects.
 func (c *FakeImageVerificationPolicies) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
-	action := testing.NewDeleteCollectionAction(imageverificationpoliciesResource, c.ns, listOpts)
+	action := testing.NewRootDeleteCollectionAction(imageverificationpoliciesResource, listOpts)
 
 	_, err := c.Fake.Invokes(action, &v1alpha1.ImageVerificationPolicyList{})
 	return err
@@ -120,8 +113,7 @@ func (c *FakeImageVerificationPolicies) DeleteCollection(ctx context.Context, op
 // Patch applies the patch and returns the patched imageVerificationPolicy.
 func (c *FakeImageVerificationPolicies) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.ImageVerificationPolicy, err error) {
 	obj, err := c.Fake.
-		Invokes(testing.NewPatchSubresourceAction(imageverificationpoliciesResource, c.ns, name, pt, data, subresources...), &v1alpha1.ImageVerificationPolicy{})
-
+		Invokes(testing.NewRootPatchSubresourceAction(imageverificationpoliciesResource, name, pt, data, subresources...), &v1alpha1.ImageVerificationPolicy{})
 	if obj == nil {
 		return nil, err
 	}

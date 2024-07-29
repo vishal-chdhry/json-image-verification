@@ -28,8 +28,8 @@ type FakeNirmataV1alpha1 struct {
 	*testing.Fake
 }
 
-func (c *FakeNirmataV1alpha1) ImageVerificationPolicies(namespace string) v1alpha1.ImageVerificationPolicyInterface {
-	return &FakeImageVerificationPolicies{c, namespace}
+func (c *FakeNirmataV1alpha1) ImageVerificationPolicies() v1alpha1.ImageVerificationPolicyInterface {
+	return &FakeImageVerificationPolicies{c}
 }
 
 // RESTClient returns a RESTClient that is used to communicate

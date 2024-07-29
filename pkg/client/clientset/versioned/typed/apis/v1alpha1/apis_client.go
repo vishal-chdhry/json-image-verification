@@ -36,8 +36,8 @@ type NirmataV1alpha1Client struct {
 	restClient rest.Interface
 }
 
-func (c *NirmataV1alpha1Client) ImageVerificationPolicies(namespace string) ImageVerificationPolicyInterface {
-	return newImageVerificationPolicies(c, namespace)
+func (c *NirmataV1alpha1Client) ImageVerificationPolicies() ImageVerificationPolicyInterface {
+	return newImageVerificationPolicies(c)
 }
 
 // NewForConfig creates a new NirmataV1alpha1Client for the given config.

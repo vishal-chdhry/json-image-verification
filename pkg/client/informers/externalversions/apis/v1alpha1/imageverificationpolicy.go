@@ -42,33 +42,32 @@ type ImageVerificationPolicyInformer interface {
 type imageVerificationPolicyInformer struct {
 	factory          internalinterfaces.SharedInformerFactory
 	tweakListOptions internalinterfaces.TweakListOptionsFunc
-	namespace        string
 }
 
 // NewImageVerificationPolicyInformer constructs a new informer for ImageVerificationPolicy type.
 // Always prefer using an informer factory to get a shared informer instead of getting an independent
 // one. This reduces memory footprint and number of connections to the server.
-func NewImageVerificationPolicyInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers) cache.SharedIndexInformer {
-	return NewFilteredImageVerificationPolicyInformer(client, namespace, resyncPeriod, indexers, nil)
+func NewImageVerificationPolicyInformer(client versioned.Interface, resyncPeriod time.Duration, indexers cache.Indexers) cache.SharedIndexInformer {
+	return NewFilteredImageVerificationPolicyInformer(client, resyncPeriod, indexers, nil)
 }
 
 // NewFilteredImageVerificationPolicyInformer constructs a new informer for ImageVerificationPolicy type.
 // Always prefer using an informer factory to get a shared informer instead of getting an independent
 // one. This reduces memory footprint and number of connections to the server.
-func NewFilteredImageVerificationPolicyInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers, tweakListOptions internalinterfaces.TweakListOptionsFunc) cache.SharedIndexInformer {
+func NewFilteredImageVerificationPolicyInformer(client versioned.Interface, resyncPeriod time.Duration, indexers cache.Indexers, tweakListOptions internalinterfaces.TweakListOptionsFunc) cache.SharedIndexInformer {
 	return cache.NewSharedIndexInformer(
 		&cache.ListWatch{
 			ListFunc: func(options v1.ListOptions) (runtime.Object, error) {
 				if tweakListOptions != nil {
 					tweakListOptions(&options)
 				}
-				return client.NirmataV1alpha1().ImageVerificationPolicies(namespace).List(context.TODO(), options)
+				return client.NirmataV1alpha1().ImageVerificationPolicies().List(context.TODO(), options)
 			},
 			WatchFunc: func(options v1.ListOptions) (watch.Interface, error) {
 				if tweakListOptions != nil {
 					tweakListOptions(&options)
 				}
-				return client.NirmataV1alpha1().ImageVerificationPolicies(namespace).Watch(context.TODO(), options)
+				return client.NirmataV1alpha1().ImageVerificationPolicies().Watch(context.TODO(), options)
 			},
 		},
 		&apisv1alpha1.ImageVerificationPolicy{},
@@ -78,7 +77,7 @@ func NewFilteredImageVerificationPolicyInformer(client versioned.Interface, name
 }
 
 func (f *imageVerificationPolicyInformer) defaultInformer(client versioned.Interface, resyncPeriod time.Duration) cache.SharedIndexInformer {
-	return NewFilteredImageVerificationPolicyInformer(client, f.namespace, resyncPeriod, cache.Indexers{cache.NamespaceIndex: cache.MetaNamespaceIndexFunc}, f.tweakListOptions)
+	return NewFilteredImageVerificationPolicyInformer(client, resyncPeriod, cache.Indexers{cache.NamespaceIndex: cache.MetaNamespaceIndexFunc}, f.tweakListOptions)
 }
 
 func (f *imageVerificationPolicyInformer) Informer() cache.SharedIndexInformer {

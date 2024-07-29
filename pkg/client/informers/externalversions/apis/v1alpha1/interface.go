@@ -41,5 +41,5 @@ func New(f internalinterfaces.SharedInformerFactory, namespace string, tweakList
 
 // ImageVerificationPolicies returns a ImageVerificationPolicyInformer.
 func (v *version) ImageVerificationPolicies() ImageVerificationPolicyInformer {
-	return &imageVerificationPolicyInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
+	return &imageVerificationPolicyInformer{factory: v.factory, tweakListOptions: v.tweakListOptions}
 }

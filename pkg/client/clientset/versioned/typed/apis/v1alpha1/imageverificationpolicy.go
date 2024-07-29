@@ -33,7 +33,7 @@ import (
 // ImageVerificationPoliciesGetter has a method to return a ImageVerificationPolicyInterface.
 // A group's client should implement this interface.
 type ImageVerificationPoliciesGetter interface {
-	ImageVerificationPolicies(namespace string) ImageVerificationPolicyInterface
+	ImageVerificationPolicies() ImageVerificationPolicyInterface
 }
 
 // ImageVerificationPolicyInterface has methods to work with ImageVerificationPolicy resources.
@@ -52,14 +52,12 @@ type ImageVerificationPolicyInterface interface {
 // imageVerificationPolicies implements ImageVerificationPolicyInterface
 type imageVerificationPolicies struct {
 	client rest.Interface
-	ns     string
 }
 
 // newImageVerificationPolicies returns a ImageVerificationPolicies
-func newImageVerificationPolicies(c *NirmataV1alpha1Client, namespace string) *imageVerificationPolicies {
+func newImageVerificationPolicies(c *NirmataV1alpha1Client) *imageVerificationPolicies {
 	return &imageVerificationPolicies{
 		client: c.RESTClient(),
-		ns:     namespace,
 	}
 }
 
@@ -67,7 +65,6 @@ func newImageVerificationPolicies(c *NirmataV1alpha1Client, namespace string) *i
 func (c *imageVerificationPolicies) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.ImageVerificationPolicy, err error) {
 	result = &v1alpha1.ImageVerificationPolicy{}
 	err = c.client.Get().
-		Namespace(c.ns).
 		Resource("imageverificationpolicies").
 		Name(name).
 		VersionedParams(&options, scheme.ParameterCodec).
@@ -84,7 +81,6 @@ func (c *imageVerificationPolicies) List(ctx context.Context, opts v1.ListOption
 	}
 	result = &v1alpha1.ImageVerificationPolicyList{}
 	err = c.client.Get().
-		Namespace(c.ns).
 		Resource("imageverificationpolicies").
 		VersionedParams(&opts, scheme.ParameterCodec).
 		Timeout(timeout).
@@ -101,7 +97,6 @@ func (c *imageVerificationPolicies) Watch(ctx context.Context, opts v1.ListOptio
 	}
 	opts.Watch = true
 	return c.client.Get().
-		Namespace(c.ns).
 		Resource("imageverificationpolicies").
 		VersionedParams(&opts, scheme.ParameterCodec).
 		Timeout(timeout).
@@ -112,7 +107,6 @@ func (c *imageVerificationPolicies) Watch(ctx context.Context, opts v1.ListOptio
 func (c *imageVerificationPolicies) Create(ctx context.Context, imageVerificationPolicy *v1alpha1.ImageVerificationPolicy, opts v1.CreateOptions) (result *v1alpha1.ImageVerificationPolicy, err error) {
 	result = &v1alpha1.ImageVerificationPolicy{}
 	err = c.client.Post().
-		Namespace(c.ns).
 		Resource("imageverificationpolicies").
 		VersionedParams(&opts, scheme.ParameterCodec).
 		Body(imageVerificationPolicy).
@@ -125,7 +119,6 @@ func (c *imageVerificationPolicies) Create(ctx context.Context, imageVerificatio
 func (c *imageVerificationPolicies) Update(ctx context.Context, imageVerificationPolicy *v1alpha1.ImageVerificationPolicy, opts v1.UpdateOptions) (result *v1alpha1.ImageVerificationPolicy, err error) {
 	result = &v1alpha1.ImageVerificationPolicy{}
 	err = c.client.Put().
-		Namespace(c.ns).
 		Resource("imageverificationpolicies").
 		Name(imageVerificationPolicy.Name).
 		VersionedParams(&opts, scheme.ParameterCodec).
@@ -138,7 +131,6 @@ func (c *imageVerificationPolicies) Update(ctx context.Context, imageVerificatio
 // Delete takes name of the imageVerificationPolicy and deletes it. Returns an error if one occurs.
 func (c *imageVerificationPolicies) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
 	return c.client.Delete().
-		Namespace(c.ns).
 		Resource("imageverificationpolicies").
 		Name(name).
 		Body(&opts).
@@ -153,7 +145,6 @@ func (c *imageVerificationPolicies) DeleteCollection(ctx context.Context, opts v
 		timeout = time.Duration(*listOpts.TimeoutSeconds) * time.Second
 	}
 	return c.client.Delete().
-		Namespace(c.ns).
 		Resource("imageverificationpolicies").
 		VersionedParams(&listOpts, scheme.ParameterCodec).
 		Timeout(timeout).
@@ -166,7 +157,6 @@ func (c *imageVerificationPolicies) DeleteCollection(ctx context.Context, opts v
 func (c *imageVerificationPolicies) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.ImageVerificationPolicy, err error) {
 	result = &v1alpha1.ImageVerificationPolicy{}
 	err = c.client.Patch(pt).
-		Namespace(c.ns).
 		Resource("imageverificationpolicies").
 		Name(name).
 		SubResource(subresources...).
