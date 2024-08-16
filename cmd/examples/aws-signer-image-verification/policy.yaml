@@ -18,7 +18,7 @@ spec:
         - name: test
           path: /containerDefinitions/*/image/
       verify:
-      - imageReferences: ghcr.io/kyverno/test-verify-image*
+      - imageReferences: "*"
         externalService:
         - apiCall:
             method: POST
@@ -28,6 +28,8 @@ spec:
             - key: imageReferences
               value: 
               - "844333597536.dkr.ecr.us-west-2.amazonaws.com*"
+            - key: trustPolicy
+              value: "tp-test-notation"
             - key: attestations
               value: 
               - imageReference: "*"
