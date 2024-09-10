@@ -12,7 +12,8 @@ spec:
         - name: test
           path: /containerDefinitions/*/image/
       verify:
-      - imageReferences: ghcr.io/kyverno/test-verify-image*
+      - imageReferences: 
+        - ghcr.io/kyverno/test-verify-image*
         notary:
           - certs: |-
               -----BEGIN CERTIFICATE-----

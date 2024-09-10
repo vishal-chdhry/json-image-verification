@@ -126,6 +126,12 @@ func substituteVariablesInRule(rule *v1alpha1.ImageVerificationRule, jsonCtx eng
 		}
 	}
 
+	var err error
+	ruleCopy, err = variables.SubstituteAllInType(logr.Discard(), jsonCtx, ruleCopy)
+	if err != nil {
+		return nil, err
+	}
+
 	for i := range ruleCopy.Rules {
 		if ruleCopy.Rules[i].Cosign != nil {
 			for j := range ruleCopy.Rules[i].Cosign {
@@ -135,11 +141,6 @@ func substituteVariablesInRule(rule *v1alpha1.ImageVerificationRule, jsonCtx eng
 					}
 				}
 			}
-		}
-		var err error
-		ruleCopy, err = variables.SubstituteAllInType(logr.Discard(), jsonCtx, ruleCopy)
-		if err != nil {
-			return nil, err
 		}
 
 		if ruleCopy.Rules[i].Notary != nil {

@@ -45,6 +45,15 @@ func NewVerifier(rules v1alpha1.VerificationRules, client dclient.Interface, jso
 	}
 }
 
+func match(imgRefs []string, image string) bool {
+	for _, s := range imgRefs {
+		if wildcard.Match(s, image) {
+			return true
+		}
+	}
+	return false
+}
+
 func (i *imageVerifier) Verify(image string) VerificationResult {
 	verificationResult := VerificationResult{
 		VerificationResponses: make([]VerificationResponse, len(i.rules)),
@@ -59,7 +68,7 @@ func (i *imageVerifier) Verify(image string) VerificationResult {
 			VerificationRule: policy,
 			Failures:         make([]error, 0),
 		}
-		if !wildcard.Match(policy.ImageReferences, image) {
+		if !match(policy.ImageReferences, image) {
 			skippedCount += 1
 			continue
 		}
@@ -124,9 +133,11 @@ func (i *imageVerifier) cosignVerification(pol *v1alpha1.Cosign, image string) e
 		return err
 	}
 
-	_, err = i.cosignVerifier.VerifySignature(context.TODO(), *opts)
-	if err != nil {
-		return err
+	if len(pol.InToToAttestations) == 0 {
+		_, err = i.cosignVerifier.VerifySignature(context.TODO(), *opts)
+		if err != nil {
+			return err
+		}
 	}
 
 	for _, att := range pol.InToToAttestations {
@@ -136,12 +147,31 @@ func (i *imageVerifier) cosignVerification(pol *v1alpha1.Cosign, image string) e
 
 		o := *opts
 		o.Type = att.Type
-		_, err := i.cosignVerifier.FetchAttestations(context.Background(), o)
+		resp, err := i.cosignVerifier.FetchAttestations(context.Background(), o)
 		if err != nil {
 			return err
 		}
+		resp = i.filterStatements(att.Type, resp)
+		val, msg, err := i.verifyAttestationConditions(att.Conditions, resp)
+		if err != nil {
+			return fmt.Errorf("failed to check attestations: %w", err)
+		}
+		if !val {
+			return fmt.Errorf("attestation checks failed for %s and predicate %s: %s", image, att.Type, msg)
+		}
 	}
 	return nil
+}
+
+func (i *imageVerifier) filterStatements(predicateType string, resp *images.Response) *images.Response {
+	statements := make([]map[string]interface{}, 0)
+	for _, v := range resp.Statements {
+		if v["type"] == predicateType {
+			statements = append(statements, v)
+		}
+	}
+	resp.Statements = statements
+	return resp
 }
 
 func (i *imageVerifier) notaryVerification(pol *v1alpha1.Notary, image string) error {
@@ -150,9 +180,11 @@ func (i *imageVerifier) notaryVerification(pol *v1alpha1.Notary, image string) e
 		return err
 	}
 
-	_, err = i.notaryVerifier.VerifySignature(context.Background(), *opts)
-	if err != nil {
-		return err
+	if len(pol.Attestations) == 0 {
+		_, err = i.notaryVerifier.VerifySignature(context.Background(), *opts)
+		if err != nil {
+			return err
+		}
 	}
 
 	for _, att := range pol.Attestations {

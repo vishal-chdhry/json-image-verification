@@ -18,7 +18,8 @@ spec:
         - name: test
           path: /containerDefinitions/*/image/
       verify:
-      - imageReferences: "*"
+      - imageReferences: 
+        - "*"
         externalService:
         - apiCall:
             method: POST

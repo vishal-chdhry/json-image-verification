@@ -12,7 +12,8 @@ spec:
         - name: test
           path: /containerDefinitions/*/image/
       verify:
-      - imageReferences: ghcr.io/*
+      - imageReferences: 
+        - ghcr.io/*
         cosign:
           - keyless:
               issuer: https://accounts.google.com

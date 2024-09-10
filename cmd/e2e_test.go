@@ -44,6 +44,12 @@ func Test_Verify(t *testing.T) {
 			outputPath:   "./examples/cosign-keyless/bad-out.txt",
 		},
 		{
+			name:         "cosign keyless attestation pass",
+			policyPath:   "./examples/cosign-keyless-attestations/policy.yaml",
+			resourcePath: "./examples/cosign-keyless-attestations/payload.json",
+			outputPath:   "./examples/cosign-keyless-attestations/out.txt",
+		},
+		{
 			name:         "notary attestation pass",
 			policyPath:   "./examples/notary-attestation-verification/policy.yaml",
 			resourcePath: "./examples/notary-attestation-verification/payload.json",
