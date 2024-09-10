@@ -13,7 +13,8 @@ spec:
           path: /containerDefinitions/*/image/
       count: 1
       verify:
-      - imageReferences: "ghcr.io/kyverno/test-verify-image*"
+      - imageReferences: 
+        - "ghcr.io/kyverno/test-verify-image*"
         cosign:
         - key:
             publicKey: |-
@@ -22,7 +23,8 @@ spec:
               5/KAQN0/KjHcorm/J5yctVd7iEcnessRQjU917hmKO6JWVGHpDguIyakZA==
               -----END PUBLIC KEY-----
           ignoreTlog: true
-      - imageReferences: ghcr.io/*
+      - imageReferences: 
+        - ghcr.io/*
         cosign:
           - keyless:
               issuer: https://accounts.google.com

@@ -13,34 +13,34 @@ func Test_VerificationPolicyValidation(t *testing.T) {
 	}{
 		{
 			name:   "cosign key verification",
-			policy: `{"imageReferences":"*","cosign":[{"key":{"publicKey":""}}]}`,
+			policy: `{"imageReferences":["*"],"cosign":[{"key":{"publicKey":""}}]}`,
 		},
 		{
 			name:   "cosign keyless verifiaction",
-			policy: `{"imageReferences":"*","cosign":[{"keyless":{"issuer":"","subject":"","root":""}}]}`,
+			policy: `{"imageReferences":["*"],"cosign":[{"keyless":{"issuer":"","subject":"","root":""}}]}`,
 		},
 		{
 			name:   "cosign certificate verification",
-			policy: `{"imageReferences":"*","cosign":[{"certificate":{"cert":"","certChain":""}}]}`,
+			policy: `{"imageReferences":["*"],"cosign":[{"certificate":{"cert":"","certChain":""}}]}`,
 		},
 		{
 			name:   "cosign both key and keyless",
-			policy: `{"imageReferences":"*","cosign":[{"key":{"publicKey":""},"keyless":{"issuer":"","subject":"","root":""}}]}`,
+			policy: `{"imageReferences":["*"],"cosign":[{"key":{"publicKey":""},"keyless":{"issuer":"","subject":"","root":""}}]}`,
 			err:    errMultipleAttestor,
 		},
 		{
 			name:   "cosign both key and cert",
-			policy: `{"imageReferences":"*","cosign":[{"key":{"publicKey":""},"certificate":{"cert":"","certChain":""}}]}`,
+			policy: `{"imageReferences":["*"],"cosign":[{"key":{"publicKey":""},"certificate":{"cert":"","certChain":""}}]}`,
 			err:    errMultipleAttestor,
 		},
 		{
 			name:   "cosign both keyless and certificate",
-			policy: `{"imageReferences":"*","cosign":[{"keyless":{"issuer":"","subject":"","root":""},"certificate":{"cert":"","certChain":""}}]}`,
+			policy: `{"imageReferences":["*"],"cosign":[{"keyless":{"issuer":"","subject":"","root":""},"certificate":{"cert":"","certChain":""}}]}`,
 			err:    errMultipleAttestor,
 		},
 		{
 			name:   "cosign key, keyless and certificate",
-			policy: `{"imageReferences":"*","cosign":[{"key":{"publicKey":""},"keyless":{"issuer":"","subject":"","root":""},"certificate":{"cert":"","certChain":""}}]}`,
+			policy: `{"imageReferences":["*"],"cosign":[{"key":{"publicKey":""},"keyless":{"issuer":"","subject":"","root":""},"certificate":{"cert":"","certChain":""}}]}`,
 			err:    errMultipleAttestor,
 		},
 	}
